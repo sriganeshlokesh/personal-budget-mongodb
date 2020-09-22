@@ -19,12 +19,28 @@
   </head>
   <body>
     <!-- This is a Semantic HTML Change -->
-    <nav>
+    <nav role="navigation">
       <ul>
-        <li><a href="./index.html">Home</a></li>
-        <li><a href="./about.html">About</a></li>
-        <li><a href="./login.html">Login</a></li>
-        <li><a href="https://google.com">Google</a></li>
+        <!-- This is an A11y Change -->
+        <li><a href="./index.html" title="Homepage">Home</a></li>
+        <!-- This is an A11y Change -->
+        <li>
+          <a
+            href="./about.html"
+            title="About page"
+            aria-label="Head to About Page"
+            >About</a
+          >
+        </li>
+        <li>
+          <a
+            href="./login.html"
+            title="Login page"
+            aria-label="Head to Login Page"
+            >Login</a
+          >
+        </li>
+        <li><a href="https://google.com" title="Google">Google</a></li>
       </ul>
     </nav>
 
@@ -38,7 +54,7 @@
       <!-- This is a Semantic HTML Change -->
       <section>
         <!-- This is a Semantic HTML Change -->
-        <article>
+        <article role="article">
           <h1>Stay on track</h1>
           <p>
             Do you know where you are spending your money? If you really stop to
@@ -46,15 +62,15 @@
             depends on real data... and this app will help you with that!
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+        <!-- This is an A11y Change -->
+        <article role="article">
           <h1>Alerts</h1>
           <p>
             What if your clothing budget ended? You will get an alert. The goal
             is to never go over the budget.
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
+
         <article>
           <h1>Results</h1>
           <p>
@@ -64,13 +80,13 @@
             accounted for.
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+
+        <article role="article">
           <h1>Free</h1>
           <p>This app is free!!! And you are the only one holding your data!</p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+
+        <article role="article">
           <h1>Stay on track</h1>
           <p>
             Do you know where you are spending your money? If you really stop to
@@ -78,16 +94,16 @@
             depends on real data... and this app will help you with that!
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+
+        <article role="article">
           <h1>Alerts</h1>
           <p>
             What if your clothing budget ended? You will get an alert. The goal
             is to never go over the budget.
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+
+        <article role="article">
           <h1>Results</h1>
           <p>
             People who stick to a financial plan, budgeting every expense, get
@@ -96,8 +112,8 @@
             accounted for.
           </p>
         </article>
-        <!-- This is a Semantic HTML Change -->
-        <article>
+
+        <article role="article">
           <h1>Free</h1>
           <p>This app is free!!! And you are the only one holding your data!</p>
         </article>
