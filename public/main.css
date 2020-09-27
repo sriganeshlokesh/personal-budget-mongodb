@@ -69,8 +69,14 @@ header h2 {
 }
 
 section {
-  max-width: 768px;
+  max-width: 1080px;
   display: inline-block;
+}
+
+#d3 {
+  height: 700px;
+  width: 100%;
+  margin-left: 20px;
 }
 
 footer {
@@ -86,8 +92,8 @@ footer {
 .container article {
   display: inline-block;
   width: 100%;
-  max-width: 340px;
-  text-align: justify;
+  max-width: 700px;
+  text-align: center;
   margin: 20px;
 }
 

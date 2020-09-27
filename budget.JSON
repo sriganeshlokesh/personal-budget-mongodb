@@ -26,11 +26,15 @@
     },
     {
       "title": "Cake",
-      "budget": 20
+      "budget": 60
     },
     {
       "title": "Gym",
-      "budget": 30
+      "budget": 100
+    },
+    {
+      "title": "Lunch",
+      "budget": 10
     }
   ]
 }
