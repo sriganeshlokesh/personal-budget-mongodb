@@ -112,10 +112,16 @@
             accounted for.
           </p>
         </article>
-
         <article role="article">
           <h1>Free</h1>
           <p>This app is free!!! And you are the only one holding your data!</p>
+        </article>
+
+        <article role="article">
+          <h1>Chart.js</h1>
+          <p>
+            <canvas id="myChart" width="400" height="400"></canvas>
+          </p>
         </article>
       </section>
     </div>
@@ -124,5 +130,42 @@
     <footer>
       <div class="center">All rights reserved &copy; Sriganesh Lokesh</div>
     </footer>
+    <script
+      src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.20.0/axios.min.js"
+      integrity="sha512-quHCp3WbBNkwLfYUMd+KwBAgpVukJu5MncuQaWXgCrfgcxCJAq/fo+oqrRKOj+UKEmyMCG3tb8RB63W+EmrOBg=="
+      crossorigin="anonymous"
+    ></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@2.8.0"></script>
+    <script>
+      var dataSource = {
+        datasets: [
+          {
+            data: [30, 40, 50],
+            backgroundColor: ["#ffcd56", "#ff6384", "#36a2eb", "#fd6b19"],
+          },
+        ],
+        labels: ["Eat Out", "Rent", "Grocery"],
+      };
+
+      function createChart() {
+        var ctx = document.getElementById("myChart").getContext("2d");
+        var myPieChart = new Chart(ctx, {
+          type: "pie",
+          data: dataSource,
+        });
+      }
+
+      function getBudget() {
+        axios.get("/budget").then((res) => {
+          console.log(res.data);
+          for (var i = 0; i < res.data.myBudget.length; i++) {
+            dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
+            dataSource.labels[i] = res.data.myBudget[i].title;
+          }
+          createChart();
+        });
+      }
+      getBudget();
+    </script>
   </body>
 </html>
