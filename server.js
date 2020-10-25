@@ -2,19 +2,31 @@ const express = require("express");
 const app = express();
 const port = process.env.PORT || 3000;
 const fs = require("fs");
+const mongoose = require("mongoose");
+require("dotenv").config();
+const expense = require("./routes/expenses");
 
-let budgets = fs.readFileSync("budget.JSON");
-let budget = JSON.parse(budgets);
+// Connect to Database
+mongoose
+  .connect(process.env.MONGO_DB, {
+    useNewUrlParser: true,
+    useUnifiedTopology: true,
+  })
+  .then(() => {
+    console.log("Connected to Database");
+  })
+  .catch((err) => {
+    console.log(err);
+  });
+
+// Body Parsor Middleware
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 
 app.use("/", express.static("public"));
 
-app.get("/hello", (req, res) => {
-  res.send("Hello World");
-});
-
-app.get("/budget", (req, res) => {
-  res.json(budget);
-});
+// Route Middleware
+app.use("/budget", expense);
 
 app.listen(port, () => {
   console.log(`Server Running on Port: ${port}`);

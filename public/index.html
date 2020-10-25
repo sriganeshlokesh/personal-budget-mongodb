@@ -56,7 +56,6 @@
             >Login</a
           >
         </li>
-        <li><a href="https://google.com" title="Google">Google</a></li>
       </ul>
     </nav>
 
@@ -137,52 +136,50 @@
     <script src="https://d3js.org/d3.v4.js"></script>
     <script src="https://d3js.org/d3-scale-chromatic.v1.min.js"></script>
     <script>
-      var dataSource = {
-        datasets: [
-          {
-            data: [30, 40, 50],
-            backgroundColor: [
-              "#ffcd56",
-              "#ff6384",
-              "#36a2eb",
-              "#fd6b19",
-              "#58508d",
-              "#bc5090",
-              "#ff6361",
-              "#003f5c",
-            ],
-          },
-        ],
-        labels: ["Eat Out", "Rent", "Grocery"],
-      };
-
-      var d3Source = {};
-
-      function createChart() {
+    
+      function createChart(data) {
+        var labels = []
+        var _data = []
+        var colors = []
+        for (var i = 0; i < data.length; i++){
+          labels[i] = data[i].title
+          _data[i] = data[i].budget
+          colors[i] = data[i].color
+        }
         var ctx = document.getElementById("myChart").getContext("2d");
         var myPieChart = new Chart(ctx, {
           type: "pie",
-          data: dataSource,
+          data: {
+            labels: labels,
+            datasets:[
+              {
+                data: _data,
+                backgroundColor:colors
+              }
+
+            ]
+          },
         });
       }
 
       function getBudget() {
-        axios.get("/budget").then((res) => {
-          console.log(res.data);
-          for (var i = 0; i < res.data.myBudget.length; i++) {
-            dataSource.datasets[0].data[i] = res.data.myBudget[i].budget;
-            dataSource.labels[i] = res.data.myBudget[i].title;
-            d3Source[res.data.myBudget[i].title] = res.data.myBudget[i].budget;
-          }
-          createChart();
-          createPie();
+        axios.get("/budget/all").then((res) => {          
+          createChart(res.data);
+          createPie(res.data);
         });
       }
       getBudget();
 
-      console.log(d3Source);
-      function createPie() {
-        var width = 650;
+      function createPie(data) {
+
+        var labels = []
+        var colors = []
+        for(var i = 0; i < data.length; i++){
+          labels[i] = data[i].title
+          colors[i] = data[i].color
+        }
+
+        var width = 750;
         height = 650;
         margin = 40;
 
@@ -201,18 +198,17 @@
         // set the color scale
         var color = d3
           .scaleOrdinal()
-          .domain(dataSource.labels)
-          .range(d3.schemeDark2);
+          .domain(labels)
+          .range(colors);
 
         // Compute the position of each group on the pie:
         var pie = d3
           .pie()
           .sort(null) // Do not sort group by size
           .value(function (d) {
-            return d.value;
+            return d.value.budget;
           });
-        var data_ready = pie(d3.entries(d3Source));
-        console.log(data_ready);
+        var data_ready = pie(d3.entries(data));
 
         // The arc generator
         var arc = d3
@@ -234,7 +230,7 @@
           .append("path")
           .attr("d", arc)
           .attr("fill", function (d) {
-            return color(d.data.key);
+            return color(d.data.value.title);
           })
           .attr("stroke", "white")
           .style("stroke-width", "2px")
@@ -265,7 +261,7 @@
           .enter()
           .append("text")
           .text(function (d) {
-            return d.data.key;
+            return d.data.value.title;
           })
           .attr("transform", function (d) {
             var pos = outerArc.centroid(d);
